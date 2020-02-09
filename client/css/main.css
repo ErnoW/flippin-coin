@@ -1,0 +1,241 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  background-color: #eee;
+  color: #333;
+  align-items: stretch;
+  justify-content: center;
+  font-family: "Rubik", sans-serif;
+}
+
+header.header-primary {
+  display: flex;
+}
+
+h1,
+h2 {
+  font-family: "Bowlby One SC", cursive;
+  text-align: center;
+  width: 100%;
+}
+
+h1 {
+  font-size: 3em;
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+
+h2 {
+  font-size: 1.8em;
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+}
+
+main.main-primary {
+  display: flex;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  width: 95%;
+  max-width: 1000px;
+}
+
+/* main.main-primary .admin-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  width: 95%;
+  max-width: 1000px;
+} */
+
+footer.footer-primary {
+  display: flex;
+}
+
+.bet-box {
+  position: relative;
+  overflow: hidden;
+  max-width: 300px;
+  display: flex;
+  border-radius: 8px;
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 100ms;
+  box-sizing: border-box;
+  height: 48px;
+  background-color: white;
+}
+
+.bet-box:focus-within {
+  box-shadow: 0px 12px 70px rgba(0, 0, 0, 0.2);
+}
+
+.bet-button {
+  width: 80px;
+  background-color: rgb(78, 252, 208);
+  border: 0;
+  font-size: 1.1em;
+  letter-spacing: 2px;
+  font-family: "Bowlby One SC", cursive;
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.2);
+  outline: 0;
+  /* transition: background 200ms; */
+  position: relative;
+}
+
+.bet-button:hover,
+.bet-button:focus {
+  background-color: rgb(22, 194, 185);
+  border: 0;
+}
+
+.bet-input {
+  flex-grow: 1;
+  border: 0;
+  background: white;
+  font-family: "Bowlby One SC", cursive;
+  text-align: center;
+  outline: 0;
+  position: relative;
+  min-width: 0;
+  border: 3px solid white;
+  border-right: 0;
+}
+
+.bet-input:focus {
+  border: 3px solid rgb(78, 252, 208);
+  border-right: 0;
+}
+
+#outcome {
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.bet-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bet-text {
+  font-size: 0.8em;
+  line-height: 48px;
+  /* margin-top: -0.4em; */
+  /* font-family: "Bowlby One SC", cursive; */
+  color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 0.5em;
+  position: absolute;
+  right: 95px;
+  top: 0;
+}
+
+.coin-wrapper {
+  height: 200px;
+  width: 100%;
+  position: relative;
+}
+
+.coin {
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  transform-origin: center;
+  /* transform: translate(-50%, -50%); */
+  margin-left: -75px;
+  margin-top: -75px;
+  transition: width 200ms, height 200ms, top 2000ms, border 500ms, background 500ms;
+  background-color: #ffffff;
+  border: 8px solid #a0a0a0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.coin.flipped {
+  animation: rotate3d 500ms linear infinite;
+  top: -2000px;
+}
+
+.coin.landed {
+  animation: rotate3d 500ms 4 linear;
+}
+
+.coin.won {
+  background-color: #7dff79;
+  border: 8px solid #3a8140;
+}
+
+.coin.loss {
+  background-color: #e26565;
+  border: 8px solid #7c1212;
+}
+
+.coin img {
+  height: 70%;
+  width: 70%;
+}
+
+.admin-panel {
+  border-left: 4px dashed #ccc;
+  font-size: 0.8em;
+  padding: 1em;
+}
+
+.admin-panel.closed {
+  display: none;
+}
+
+.admin-button {
+  border: 0;
+  height: 24px;
+  margin: 0.5em 0;
+  box-sizing: border-box;
+  background-color: rgb(78, 252, 208);
+  border-radius: 4px;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admin-button:hover {
+  background-color: rgb(22, 194, 185);
+}
+
+.admin-input {
+  height: 24px;
+  padding: 4px 10px;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  outline: 0;
+}
+
+.admin-input:focus {
+  border: 2px solid rgb(78, 252, 208);
+  box-shadow: 0px 12px 70px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes rotate3d {
+  0% {
+    transform: perspective(1000px) rotateX(0deg);
+  }
+
+  100% {
+    transform: perspective(1000px) rotateX(360deg);
+  }
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC|Rubik&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/main.css" />
+
+    <meta name="theme-color" content="#fafafa" />
+  </head>
+
+  <body>
+    <!--[if IE]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.
+      </p>
+    <![endif]-->
+    <div class="content">
+      <header class="header-primary">
+        <h1 class="title">Flippin' coin</h1>
+      </header>
+      <main class='main-primary'>
+        <div class="coin-wrapper">
+          <div class="coin">
+            <img src="assets/eth_coin.svg"/>
+          </div>
+        </div>
+        <div class="bet-section">
+          <h2 id="bet-title">Bet amount</h2>
+          <div class="bet-box">
+              <input type="number" id="bet-amount" class="bet-input" value=0.1></input>
+              <span class="bet-text">ETH</span>
+              <button id="flip" class="bet-button">FLIP</button>
+          </div>
+          <p id="outcome"></p>
+        </div>
+      </main>
+      <footer class="footer-primary"></footer>
+    </div>
+    
+  
+    <div class="admin-panel closed">
+      <h2>Admin</h2>
+      <div>
+        <label>Deposit (ETH): 
+          <input class="admin-input" type="number" id="deposit-amount"></input>
+        </label>
+      </div>
+      <button class="admin-button" id="deposit">Deposit</button>
+
+      <div>
+        <h2>Data</h2>
+        Balance: <span id="data-balance"></span><br>
+        User: <span id="data-user"></span><br>
+        Owner: <span id="data-owner"></span><br>
+      </div>
+      <button class="admin-button" id="get-balance">Update balance</button>
+    </div>
+
+    
+
+    <script src="js/vendor/modernizr-3.8.0.min.js"></script>
+    <script src="js/vendor/web3.min.js"></script>
+    <script src="js/abi.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>');
+    </script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
