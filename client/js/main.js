@@ -71,7 +71,7 @@
           setTimeout(function() {
             $("#bet-amount").val(ethAmount * 2);
             $("#bet-title").text("Double or nothin'");
-            $("#outcome").text("Concrats, you just won " + ethAmount + "ETH, double or nothin'?");
+            $("#outcome").text("Congrats, you just won " + ethAmount + "ETH, double or nothin'?");
           }, 1000);
         } else {
           $(".coin").addClass("loss");
