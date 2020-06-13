@@ -7,8 +7,16 @@ contract Bank is Ownable {
     event contractWithdrawal(uint256 balance);
     event contractDeposit(uint256 balance);
 
+    uint256 public minimumBet = 0.0001 ether;
+    mapping(address => uint256) internal balancesToBeCollected;
+
     constructor() public payable {
         balance = msg.value;
+    }
+
+    function myBalanceToBeCollected() external view returns (uint256) {
+        uint256 total = balancesToBeCollected[msg.sender];
+        return total;
     }
 
     function payout(uint256 amount, address payable to)
@@ -23,7 +31,15 @@ contract Bank is Ownable {
         return toTransfer;
 
         // TODO: Assert
+    }
 
+    function collectBalance() public {
+        uint256 payment = balancesToBeCollected[msg.sender];
+
+        if (payment > 0) {
+            payout(payment, msg.sender);
+            delete balancesToBeCollected[msg.sender];
+        }
     }
 
     function withdrawAll() public onlyOwner returns (uint256) {
@@ -45,5 +61,21 @@ contract Bank is Ownable {
         emit contractWithdrawal(balance);
         payout(amount, msg.sender);
         return balance;
+    }
+
+    modifier costs(uint256 cost) {
+        require(
+            msg.value >= cost,
+            "not enough funds transacted, need at least"
+        );
+        _;
+    }
+
+    function close() public onlyOwner {
+        selfdestruct(msg.sender);
+    }
+
+    function setMinimumBet(uint256 newMinumumBet) public onlyOwner {
+        minimumBet = newMinumumBet;
     }
 }
