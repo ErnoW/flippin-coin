@@ -1,7 +1,7 @@
-# CoinFlip Smart Contracts
+# Flippin' Coin
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![](https://img.shields.io/badge/Ivan%20on%20Tech%20Academy-Ethereum%20201-blue)](https://academy.ivanontech.com/a/17936/3zF57WQv)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Donate with Ethereum](https://en.cryptobadges.io/badge/micro/0x7a4577D692e37b49987d488eFF2c18186A7f6b2A)](https://en.cryptobadges.io/donate/0x7a4577D692e37b49987d488eFF2c18186A7f6b2A)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/76d848df-b740-4850-a007-ad3e8d70e8ef/deploy-status)](https://app.netlify.com/sites/flippincoin/deploys)
 
