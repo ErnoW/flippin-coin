@@ -20,20 +20,5 @@ export const useContract = (address, abi) => {
   }, [address, abi, library, account]);
 };
 
-export const useCoinFlipContract = () => {
-  const contract = useContract(COINFLIP_ADDRESS, ICoinFlip);
-  return contract;
-  // const { library, account } = useWallet();
-  // const contract = useContract(COINFLIP_ADDRESS, ICoinFlip);
-
-  // return useMemo(() => {
-  //   if (!library) {
-  //     return null;
-  //   }
-
-  //   const signer = library.getSigner(account);
-  //   contract.connect(signer);
-
-  //   return contract;
-  // }, [library, contract]);
-};
+export const useCoinFlipContract = () =>
+  useContract(COINFLIP_ADDRESS, ICoinFlip);

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import { App } from "./App";
 import { darkTheme, lightTheme } from "./theme";
 import { ThemeProvider } from "emotion-theming";
 import { useAppContext, AppContextProvider } from "./AppContext";
@@ -17,19 +17,19 @@ const getLibrary = (provider) => {
 const InnerApp = () => {
   const { theme } = useAppContext();
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-        <App />
-      </ThemeProvider>
-    </Web3ReactProvider>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <App />
+    </ThemeProvider>
   );
 };
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppContextProvider>
-      <InnerApp />
-    </AppContextProvider>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <AppContextProvider>
+        <InnerApp />
+      </AppContextProvider>
+    </Web3ReactProvider>
   </React.StrictMode>,
   document.getElementById("root"),
 );

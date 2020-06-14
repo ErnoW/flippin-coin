@@ -21,10 +21,10 @@ const StyledNumberInput = styled.input`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.span`
   position: relative;
   display: inline-flex;
-  margin-bottom: ${({ theme }) => theme.space.l}px;
+  margin-bottom: ${({ theme, margin }) => (margin ? theme.space.l : 0)}px;
 
   &:after {
     content: "Ξ";
@@ -39,7 +39,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export const NumberInput = ({ value, onChange }) => {
+export const NumberInput = ({ value, onChange, margin }) => {
   const [internalValue, setInternalValue] = useState(value);
   const handleChange = useCallback(
     (event) => {
@@ -59,7 +59,7 @@ export const NumberInput = ({ value, onChange }) => {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper margin={margin}>
       <StyledNumberInput
         value={internalValue}
         onBlur={handleChange}

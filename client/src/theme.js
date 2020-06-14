@@ -1,5 +1,7 @@
 const colors = {
   primary: "#13f268",
+  error: "#bc1232",
+  success: "#1ac925",
   light: "#f8ffe8",
   lighter: "#f5fbe7",
   lightest: "#ffffff",
@@ -19,6 +21,7 @@ const sizes = {
 };
 
 const space = {
+  s: 6,
   m: 12,
   l: 22,
   xl: 36,

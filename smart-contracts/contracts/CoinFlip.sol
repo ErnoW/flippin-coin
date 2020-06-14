@@ -1,4 +1,4 @@
-pragma solidity 0.5.12;
+pragma solidity >=0.5.0 <0.6.0;
 
 import "./Ownable.sol";
 import "./Bank.sol";
@@ -10,26 +10,46 @@ contract CoinFlip is Ownable, Bank, usingProvable {
         uint256 bet;
     }
 
-    event CoinFlipResult(address caller, uint256 amount, bool won);
-    event LogNewProvableQuery(string message);
+    event CoinFlipResult(
+        address caller,
+        bytes32 queryId,
+        uint256 amount,
+        bool won
+    );
+    event LogNewProvableQuery(address caller, bytes32 queryId);
     event GeneratedRandomNumber(uint256 number);
+    event LogError(string error);
 
-    uint256 constant MAX_INT_FROM_BYTE = 256;
-    uint256 constant NUM_RANDOM_BYTES_REQUESTED = 1;
+    uint256 private constant NUM_RANDOM_BYTES_REQUESTED = 1;
+    uint256 private constant QUERY_EXECUTION_DELAY = 0;
+    uint256 private constant GAS_FOR_CALLBACK = 200000;
+    uint256 public minimumBet = 0.01 ether;
 
-    uint256 public latestNumber;
-
-    mapping(bytes32 => Bet) private pendingQueries;
+    mapping(bytes32 => Bet) public pendingQueries;
 
     constructor() public {
-        generateRandom();
+        provable_setProof(proofType_Ledger);
     }
 
-    function flipCoin() public payable costs(minimumBet) {
-        require(balance >= msg.value, "sorry, not enough money in the bank");
-        balance += msg.value;
+    function setMinimumBet(uint256 newMinumumBet) public onlyOwner {
+        minimumBet = newMinumumBet;
+    }
 
-        bytes32 queryId = generateRandom();
+    function flipCoin() public payable costs(minimumBet) returns (bytes32) {
+        uint256 provablePrice = provable_getPrice("RANDOM", GAS_FOR_CALLBACK);
+        require(
+            balance >= msg.value + provablePrice,
+            "sorry, not enough money in the bank"
+        );
+
+        balance = balance + msg.value - provablePrice;
+
+        bytes32 queryId = provable_newRandomDSQuery(
+            QUERY_EXECUTION_DELAY,
+            NUM_RANDOM_BYTES_REQUESTED,
+            GAS_FOR_CALLBACK
+        );
+        emit LogNewProvableQuery(msg.sender, queryId);
 
         pendingQueries[queryId] = Bet(msg.sender, msg.value);
     }
@@ -40,37 +60,37 @@ contract CoinFlip is Ownable, Bank, usingProvable {
         bytes memory _proof
     ) public {
         require(msg.sender == provable_cbAddress(), "incorrect address");
-        uint256 randomNumber = uint256(keccak256(abi.encodePacked(_result))) %
-            2;
 
-        latestNumber = randomNumber;
-        emit GeneratedRandomNumber(randomNumber);
+        if (
+            provable_randomDS_proofVerify__returnCode(
+                _queryId,
+                _result,
+                _proof
+            ) != 0
+        ) {
+            emit LogError("invalid proof");
+        } else {
+            uint256 randomNumber = uint256(
+                keccak256(abi.encodePacked(_result))
+            ) % 2;
 
-        Bet storage bet = pendingQueries[_queryId];
-        delete pendingQueries[_queryId];
-        bool hasWon = randomNumber == 0;
+            emit GeneratedRandomNumber(randomNumber);
 
-        if (hasWon) {
-            balancesToBeCollected[bet.sender] =
-                balancesToBeCollected[bet.sender] +
-                bet.bet *
-                2;
+            bool hasWon = randomNumber == 0;
+
+            if (hasWon) {
+                balancesToBeCollected[pendingQueries[_queryId].sender] =
+                    balancesToBeCollected[pendingQueries[_queryId].sender] +
+                    pendingQueries[_queryId].bet *
+                    2;
+            }
+
+            emit CoinFlipResult(
+                pendingQueries[_queryId].sender,
+                _queryId,
+                pendingQueries[_queryId].bet,
+                hasWon
+            );
         }
-
-        emit CoinFlipResult(bet.sender, bet.bet, hasWon);
-    }
-
-    function generateRandom() public payable returns (bytes32) {
-        uint256 QUERY_EXECUTION_DELAY = 0;
-        uint256 GAS_FOR_CALLBACK = 200000;
-
-        bytes32 queryId = provable_newRandomDSQuery(
-            QUERY_EXECUTION_DELAY,
-            NUM_RANDOM_BYTES_REQUESTED,
-            GAS_FOR_CALLBACK
-        );
-
-        emit LogNewProvableQuery("Provable query was sent");
-        return queryId;
     }
 }
