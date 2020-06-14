@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import "sanitize.css";
 
@@ -10,7 +10,7 @@ import { Admin } from "./components/Admin";
 import { Notifications } from "./components/Notifications";
 import { Warning } from "./components/Warning";
 import { Game } from "./components/Game";
-import { useWallet, useEagerConnect, useNetworkSync } from "./useWallet";
+import { useEagerConnect } from "./useWallet";
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.background};
@@ -30,9 +30,7 @@ const Wrapper = styled.div`
 `;
 
 export const App = () => {
-  const { activate } = useWallet();
-  useEagerConnect(activate);
-  useNetworkSync(activate);
+  useEagerConnect();
 
   return (
     <Wrapper>

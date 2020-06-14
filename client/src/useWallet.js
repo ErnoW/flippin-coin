@@ -26,8 +26,23 @@ export const injected = new InjectedConnector({
 export const isValidChainId = (chainId) =>
   chainId ? SUPPORTED_CHAINS.includes(chainId) : undefined;
 
-export function useEagerConnect(activate) {
+export function useEagerConnect() {
   const [tried, setTried] = useState(false);
+  const { activate } = useWallet();
+
+  useEffect(() => {
+    const setTriedFalse = () => setTried(false);
+    window.ethereum.on("networkChanged", setTriedFalse);
+    window.ethereum.on("chainChanged", setTriedFalse);
+    window.ethereum.on("accountChanged", setTriedFalse);
+
+    return () => {
+      window.ethereum.off("networkChanged", setTriedFalse);
+      window.ethereum.off("chainChanged", setTriedFalse);
+      window.ethereum.off("accountChanged", setTriedFalse);
+    };
+  }, [setTried]);
+
   useEffect(() => {
     if (!activate || tried) {
       return;
@@ -43,51 +58,23 @@ export function useEagerConnect(activate) {
   }, [activate, tried]);
 }
 
-export const useNetworkSync = (activate) => {
-  const { setChainId, chainId } = useWallet();
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (window.ethereum?.chainId) {
-        setChainId(parseInt(window.ethereum.chainId));
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [setChainId]);
-
-  useEffect(() => {
-    activate();
-  }, [chainId]);
-};
-
 export const useWallet = () => {
   const web3React = useWeb3React();
-  const [pending, setPending] = useState(false);
-  const [pendingError, setPendingError] = useState(false);
-  const [chainId, setChainId] = useState(
-    window.ethereum?.chainId ? parseInt(window.ethereum.chainId) : undefined,
-  );
 
   const activate = useCallback(() => {
-    setPending(true);
-    setPendingError(false);
-
     web3React.activate(injected, (error) => {
       if (error instanceof UnsupportedChainIdError) {
         web3React.activate(web3React.connector); // a little janky...can't use setError because the connector isn't set
-      } else {
-        setPendingError(true);
       }
     });
   }, [web3React]);
 
   return {
     activate,
+    isActive: web3React.active,
     deactivate: web3React.deactivate,
+    chainId: web3React.chainId,
     account: web3React.account,
-    chainId,
-    setChainId,
     isMetaMask: window.ethereum?.isMetaMask,
     isActive: web3React.active,
     library: web3React.library,
