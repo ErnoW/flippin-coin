@@ -5,6 +5,10 @@
 [![Donate with Ethereum](https://en.cryptobadges.io/badge/micro/0x7a4577D692e37b49987d488eFF2c18186A7f6b2A)](https://en.cryptobadges.io/donate/0x7a4577D692e37b49987d488eFF2c18186A7f6b2A)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/76d848df-b740-4850-a007-ad3e8d70e8ef/deploy-status)](https://app.netlify.com/sites/flippincoin/deploys)
 
+Live preview: [flippincoin.netlify.app](https://flippincoin.netlify.app)
+
+![Preview](./preview.png)
+
 A Decentralized application build for the Ethereum Network.
 Part of programming course Ethereum201 on [academy.ivanontech.com](https://academy.ivanontech.com/a/17936/3zF57WQv).
 
