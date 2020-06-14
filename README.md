@@ -86,4 +86,4 @@ Run `truffle console --network <<network>>` to open the truffle console when dep
 Open console (as described in Tests), then call `let instance = await CoinFlip.deployed()`
 get an account via `let accounts = await web3.eth.getAccounts()`
 call a fucntion like `instance.flipCoin({from: accounts[0], value: web3.utils.toWei("0.0001", "ether")})`
-or `instance.deposit({from: accounts[0], value: web3.utils.toWei("0.01", "ether")})`
+or `instance.deposit({from: accounts[0], value: web3.utils.toWei("0.1", "ether")})`

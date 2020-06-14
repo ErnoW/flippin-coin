@@ -57,12 +57,13 @@ const HeadsCoin = ({ onClick }) => {
 };
 
 export const Game = () => {
-  const { isActive, account, getContractBalance } = useWallet();
+  const { isActive, account } = useWallet();
   const {
     balance,
     profit,
     houseTakes,
     minimumBet,
+    getContractBalance,
     syncAll,
     addNotification,
   } = useAppContext();

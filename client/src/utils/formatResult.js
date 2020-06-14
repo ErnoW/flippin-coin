@@ -5,7 +5,6 @@ export const formatResult = (result, type) => {
     case "eth":
       return formatEther(result);
     case "number":
-      console.log("res", result);
       return result.toNumber();
     default:
       return result;

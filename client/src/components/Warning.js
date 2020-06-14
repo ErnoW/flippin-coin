@@ -25,12 +25,14 @@ const useRenderTimeout = (ms = 1000) => {
 };
 
 export const Warning = () => {
-  const { chainId, isMetaMask } = useWallet();
+  const { chainId, isMetaMask, isActive } = useWallet();
   const isReady = useRenderTimeout();
   let warning = null;
 
   if (!isMetaMask) {
     warning = "No MetaMask found, MetaMask is required to interact.";
+  } else if (!isActive) {
+    warning = "Connect your wallet to start";
   } else if (!isValidChainId(chainId)) {
     warning = `Invalid chain, supported chains: ${SUPPORTED_CHAINS.map(
       (id) => chains[id].name,

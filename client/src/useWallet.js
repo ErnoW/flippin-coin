@@ -32,6 +32,10 @@ export function useEagerConnect() {
 
   useEffect(() => {
     const setTriedFalse = () => setTried(false);
+    if (!window.ethereum) {
+      return;
+    }
+
     window.ethereum.on("networkChanged", setTriedFalse);
     window.ethereum.on("chainChanged", setTriedFalse);
     window.ethereum.on("accountChanged", setTriedFalse);
