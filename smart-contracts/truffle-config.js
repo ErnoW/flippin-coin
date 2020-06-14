@@ -76,7 +76,7 @@ module.exports = {
           `https://kovan.infura.io/v3/df832bedc99e41a2a59e6749e5327d7c`,
         ),
       network_id: 42, // Kovan's id
-      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      gas: 5500000,
       confirmations: 2, // # of confs to wait between deployments. (default: 0)
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )

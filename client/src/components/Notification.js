@@ -18,7 +18,14 @@ const StyledButtonIcon = styled.button`
   }
 `;
 
-export const Notification = ({ icon, title, isSuccess, isError }) => {
+export const Notification = ({
+  icon,
+  title,
+  isSuccess,
+  isError,
+  wrapText,
+  hideIn,
+}) => {
   const [isHiding, setIsHiding] = useState();
   const [isHidden, setIsHidden] = useState();
 
@@ -28,6 +35,16 @@ export const Notification = ({ icon, title, isSuccess, isError }) => {
       setIsHidden(true);
     }, 500);
   }, []);
+
+  useEffect(() => {
+    if (!hideIn) {
+      return;
+    }
+
+    setTimeout(() => {
+      handleClose();
+    }, [hideIn]);
+  }, [hideIn]);
 
   return (
     <Message
@@ -45,7 +62,7 @@ export const Notification = ({ icon, title, isSuccess, isError }) => {
 
       <span
         style={{
-          whiteSpace: "nowrap",
+          whiteSpace: wrapText ? undefined : "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
           marginRight: 4,

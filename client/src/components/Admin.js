@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { BigNumber } from "@ethersproject/bignumber";
+import { parseEther } from "@ethersproject/units";
 
 import { Button } from "./Button";
 import { Eth } from "./Eth";
@@ -27,11 +29,13 @@ export const Admin = () => {
   const { account } = useWallet();
   const [deposit, setDeposit] = useState(1);
   const [withdraw, setWithdraw] = useState(1);
-  const { minimumBet, contractBalance } = useAppContext();
+  const { contractBalance } = useAppContext();
   const ownerAddress = useOwnerAddress();
   const doDeposit = useFunction("deposit", deposit);
-  const doWithdraw = useFunction("withdraw", null, { amount: withdraw });
-  const doWithdrawAll = useFunction("withdrawAll", deposit);
+  const doWithdraw = useFunction("withdraw", undefined, [
+    parseEther(`${withdraw}`).toString(),
+  ]);
+  const doWithdrawAll = useFunction("withdrawAll");
   const isOwner = ownerAddress && ownerAddress[0] === account;
 
   if (!contract || !isOwner) {
@@ -44,8 +48,6 @@ export const Admin = () => {
       <h2>Hi Boss!</h2>
       <p>
         Game balance: <Eth>{contractBalance}</Eth>
-        <br />
-        Minimum bet: <Eth>{minimumBet}</Eth>
         <br />
         Deposit: <NumberInput onChange={setDeposit} value={deposit} />{" "}
         <Button onClick={doDeposit}>Confirm</Button>

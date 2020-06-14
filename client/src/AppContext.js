@@ -2,6 +2,7 @@ import React, { useContext, useState, useCallback, useEffect } from "react";
 import { useReadFunction } from "./utils/useReadFunction";
 import { useWallet } from "./useWallet";
 import { formatResult } from "./utils/formatResult";
+import { v4 as uuidv4 } from "uuid";
 
 const AppContext = React.createContext({});
 const DEFAULT_THEME = "dark";
@@ -51,6 +52,10 @@ export const AppContextProvider = ({ children }) => {
     "minimumBet",
     "eth",
   );
+  const { value: houseTakes, call: getHouseTakes } = useReadFunction(
+    "houseTakes",
+    "number",
+  );
   const { balance, getBalance } = useBalance();
 
   const syncAll = useCallback(() => {
@@ -58,6 +63,7 @@ export const AppContextProvider = ({ children }) => {
     getProfit();
     getBalance();
     getMinimumBet();
+    getHouseTakes();
   }, [getContractBalance, getProfit, getBalance, getMinimumBet]);
 
   const addTransaction = useCallback(
@@ -86,7 +92,7 @@ export const AppContextProvider = ({ children }) => {
           ...notification,
           onCreatedTimeStamp,
           type: "notification",
-          id: onCreatedTimeStamp.toString(),
+          id: uuidv4(),
         },
       ]);
     },
@@ -111,6 +117,8 @@ export const AppContextProvider = ({ children }) => {
         minimumBet,
         getMinimumBet,
         syncAll,
+        houseTakes,
+        getHouseTakes,
       }}
     >
       {children}

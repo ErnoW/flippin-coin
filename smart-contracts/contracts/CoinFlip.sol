@@ -25,6 +25,9 @@ contract CoinFlip is Ownable, Bank, usingProvable {
     uint256 private constant GAS_FOR_CALLBACK = 200000;
     uint256 public minimumBet = 0.01 ether;
 
+    // Percentage of profit this contract takes
+    uint256 public houseTakes = 1;
+
     mapping(bytes32 => Bet) public pendingQueries;
 
     constructor() public {
@@ -33,6 +36,10 @@ contract CoinFlip is Ownable, Bank, usingProvable {
 
     function setMinimumBet(uint256 newMinumumBet) public onlyOwner {
         minimumBet = newMinumumBet;
+    }
+
+    function setHouseTakes(uint256 newHouseTakesPercentage) public onlyOwner {
+        houseTakes = newHouseTakesPercentage;
     }
 
     function flipCoin() public payable costs(minimumBet) returns (bytes32) {
@@ -79,18 +86,27 @@ contract CoinFlip is Ownable, Bank, usingProvable {
             bool hasWon = randomNumber == 0;
 
             if (hasWon) {
+                uint256 profit = (pendingQueries[_queryId].bet *
+                    (100 - houseTakes)) / 100;
                 balancesToBeCollected[pendingQueries[_queryId].sender] =
                     balancesToBeCollected[pendingQueries[_queryId].sender] +
-                    pendingQueries[_queryId].bet *
-                    2;
-            }
+                    pendingQueries[_queryId].bet +
+                    profit;
 
-            emit CoinFlipResult(
-                pendingQueries[_queryId].sender,
-                _queryId,
-                pendingQueries[_queryId].bet,
-                hasWon
-            );
+                emit CoinFlipResult(
+                    pendingQueries[_queryId].sender,
+                    _queryId,
+                    profit,
+                    hasWon
+                );
+            } else {
+                emit CoinFlipResult(
+                    pendingQueries[_queryId].sender,
+                    _queryId,
+                    pendingQueries[_queryId].bet,
+                    hasWon
+                );
+            }
         }
     }
 }

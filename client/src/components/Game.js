@@ -22,7 +22,7 @@ const StyledCoin = styled.button`
   border: 0;
   background-color: ${({ theme }) => theme.colors.primary};
   color: white;
-  font-size: 1.5rem;
+  font-size: 3.3rem;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -58,7 +58,14 @@ const HeadsCoin = ({ onClick }) => {
 
 export const Game = () => {
   const { isActive, account, getContractBalance } = useWallet();
-  const { addNotification, balance, profit, syncAll } = useAppContext();
+  const {
+    balance,
+    profit,
+    houseTakes,
+    minimumBet,
+    syncAll,
+    addNotification,
+  } = useAppContext();
   const [bet, setBet] = useState(0.01);
   const contract = useCoinFlipContract();
 
@@ -120,9 +127,21 @@ export const Game = () => {
       <p>
         Account balance: <Eth>{balance}</Eth> <br />
         Your profit: <Eth>{profit}</Eth>{" "}
-        <Button onClick={doCollect}>Collect</Button>
+        {profit && profit !== "0.0" && (
+          <Button onClick={doCollect}>Collect</Button>
+        )}
       </p>
-      <NumberInput value={bet} onChange={setBet} margin />
+      <NumberInput value={bet} onChange={setBet} />
+      <p
+        style={{
+          marginTop: 2,
+          fontStyle: "italic",
+          fontSize: "0.7em",
+          opacity: 0.91,
+        }}
+      >
+        Minimum required bet: <Eth>{minimumBet}</Eth>, fee: {houseTakes}%
+      </p>
       <StyledCoinWrapper>
         <HeadsCoin onClick={doFlip} />
         <TailsCoin onClick={doFlip} />

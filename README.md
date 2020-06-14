@@ -30,7 +30,8 @@ cd smart-contracts
 yarn install
 ```
 
-Deploy to the local blockchain via `truffle deploy`
+Deploy to the local blockchain via `truffle deploy` (or `truffle migrate`)
+Use `--reset` to force a new deploy
 
 ### Client
 
@@ -51,18 +52,18 @@ Enable / disable, and update the suitable networks in `truffle-config.js`
 
 Get mmnomonic seedphrase add it to `smart-contracts/.secret``
 
-## Deploy contracts
+## Deploy
 
-### Local
+### Deploy contracts
 
-Run `truffle migrate` to migrate
-Run `truffle migrate --reset` to force a new migration
+To deploy:
 
-### Migrate to testnet/(mainnet)
+- Run `truffle deploy --network <<network>>` to migrate to `<<network>>`
+- Replace the address in `client/constants`
+- Replace the abi in `client/abis/coinFlip.js`
+- Make sure to fund the contract
 
-Run `truffle migrate --network <<network>>` to migrate to `<<network>>`
-
-## Deploy frontend
+### Deploy frontend
 
 Have `netlify-cli` installed
 
@@ -70,13 +71,19 @@ Have `netlify-cli` installed
 npm install netlify-cli -g
 ```
 
-To deploy, use:
+To deploy:
 
-```
-netlify deploy
-```
+- Update supported networkds in `client/constants`
+- `netlify deploy`
 
 ## Tests
 
 Run `truffle console` to open the truffle console, followed by `test`
 Run `truffle console --network <<network>>` to open the truffle console when deployed to `<<network>>`
+
+## Debugging
+
+Open console (as described in Tests), then call `let instance = await CoinFlip.deployed()`
+get an account via `let accounts = await web3.eth.getAccounts()`
+call a fucntion like `instance.flipCoin({from: accounts[0], value: web3.utils.toWei("0.0001", "ether")})`
+or `instance.deposit({from: accounts[0], value: web3.utils.toWei("0.01", "ether")})`

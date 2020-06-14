@@ -5,10 +5,10 @@ import { Transaction } from "./Transaction";
 import { Notification } from "./Notification";
 
 const StyledNotificationsWrapper = styled.div`
+  z-index: 100;
   position: fixed;
   bottom: ${({ theme }) => theme.space.m}px;
   left: ${({ theme }) => theme.space.m}px;
-  height: 100%;
   display: flex;
   justify-content: flex-end;
   flex-direction: column;

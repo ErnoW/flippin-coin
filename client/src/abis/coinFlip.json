@@ -2,69 +2,6 @@
   "contractName": "CoinFlip",
   "abi": [
     {
-      "constant": false,
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "_myid",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "string",
-          "name": "_result",
-          "type": "string"
-        }
-      ],
-      "name": "__callback",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "_queryId",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "string",
-          "name": "_result",
-          "type": "string"
-        },
-        {
-          "internalType": "bytes",
-          "name": "_proof",
-          "type": "bytes"
-        }
-      ],
-      "name": "__callback",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [],
-      "name": "close",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [],
-      "name": "collectBalance",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
@@ -128,36 +65,6 @@
       "type": "event"
     },
     {
-      "constant": false,
-      "inputs": [],
-      "name": "deposit",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [],
-      "name": "flipCoin",
-      "outputs": [
-        {
-          "internalType": "bytes32",
-          "name": "",
-          "type": "bytes32"
-        }
-      ],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
       "anonymous": false,
       "inputs": [
         {
@@ -206,12 +113,17 @@
       "constant": false,
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "newMinumumBet",
-          "type": "uint256"
+          "internalType": "bytes32",
+          "name": "_myid",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "_result",
+          "type": "string"
         }
       ],
-      "name": "setMinimumBet",
+      "name": "__callback",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
@@ -221,27 +133,22 @@
       "constant": false,
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "withdraw",
-      "outputs": [
+          "internalType": "bytes32",
+          "name": "_queryId",
+          "type": "bytes32"
+        },
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "internalType": "string",
+          "name": "_result",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_proof",
+          "type": "bytes"
         }
       ],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [],
-      "name": "withdrawAll",
+      "name": "__callback",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
@@ -272,6 +179,69 @@
         }
       ],
       "name": "balancesToBeCollected",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "close",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "collectBalance",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "deposit",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "flipCoin",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "houseTakes",
       "outputs": [
         {
           "internalType": "uint256",
@@ -352,6 +322,66 @@
       ],
       "payable": false,
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newHouseTakesPercentage",
+          "type": "uint256"
+        }
+      ],
+      "name": "setHouseTakes",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newMinumumBet",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMinimumBet",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "withdrawAll",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],

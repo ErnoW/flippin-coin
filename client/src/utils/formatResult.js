@@ -1,9 +1,12 @@
-import { formatEther } from "@ethersproject/units";
+import { formatEther, formatUnits } from "@ethersproject/units";
 
 export const formatResult = (result, type) => {
   switch (type) {
     case "eth":
       return formatEther(result);
+    case "number":
+      console.log("res", result);
+      return result.toNumber();
     default:
       return result;
   }

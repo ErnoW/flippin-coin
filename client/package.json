@@ -24,7 +24,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "sanitize.css": "^11.0.1"
+    "sanitize.css": "^11.0.1",
+    "uuid": "^8.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
